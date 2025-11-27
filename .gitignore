@@ -20,3 +20,6 @@ obj/
 NativeReferences/
 archives/
 Jars/
+
+# Scripts
+scripts/
