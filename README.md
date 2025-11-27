@@ -45,13 +45,14 @@ You can also learn all about our SDK methods in our comprehensive [SDK Reference
 For better testability and state management, we recommend wrapping the SDK in a service class:
 
 ```csharp
+using System.Collections.ObjectModel;
+
 public interface IStoreService
 {
-    // Observable collections for UI binding
     ObservableCollection<IaphubProduct> ProductsForSale { get; }
     ObservableCollection<IaphubActiveProduct> ActiveProducts { get; }
-    
-    Task RefreshProductsAsync();
+
+    Task InitializeAsync();
     Task<IaphubReceiptTransaction> BuyAsync(string sku);
     Task RestoreAsync();
     Task LoginAsync(string userId);
@@ -61,83 +62,54 @@ public interface IStoreService
 public class StoreService : IStoreService
 {
     private readonly SemaphoreSlim _refreshLock = new(1, 1);
-    
+
     public ObservableCollection<IaphubProduct> ProductsForSale { get; } = new();
     public ObservableCollection<IaphubActiveProduct> ActiveProducts { get; } = new();
 
-    public StoreService()
+    public async Task InitializeAsync()
     {
-        // Initialize SDK
-        Task.Run(async () =>
-        {
-            await IaphubSdk.StartAsync(
-                appId: "your-app-id",
-                apiKey: "your-api-key",
-                allowAnonymousPurchase: true,
-                enableStorekitV2: true,
-                lang: "en"
-            );
-            
-            // Initial refresh
-            await RefreshProductsAsync();
-        });
-        
-        // Subscribe to events
-        IaphubSdk.OnUserUpdate += async (sender, e) =>
-        {
-            await RefreshProductsAsync();
-        };
-    }
-    
-    public async Task RefreshProductsAsync()
-    {
-        // Prevent concurrent refreshes
-        if (!await _refreshLock.WaitAsync(0))
-        {
-            return;
-        }
+        await IaphubSdk.StartAsync(
+            // Found in IAPHUB dashboard
+            appId: "your-app-id",
+            // Found in IAPHUB dashboard
+            apiKey: "your-api-key",
+            // Set to true to allow purchases without user login
+            allowAnonymousPurchase: false,
+            // Enable StoreKit V2 (recommended, requires App Store Server API configuration)
+            enableStorekitV2: true
+        );
 
-        try 
+        IaphubSdk.OnUserUpdate += async (s, e) => await RefreshProductsAsync();
+
+        await RefreshProductsAsync();
+    }
+
+    private async Task RefreshProductsAsync()
+    {
+        if (!await _refreshLock.WaitAsync(0)) return;
+
+        try
         {
             var products = await IaphubSdk.GetProductsAsync();
-            
+
             ProductsForSale.Clear();
             foreach (var product in products.ProductsForSale)
-            {
                 ProductsForSale.Add(product);
-            }
-            
+
             ActiveProducts.Clear();
             foreach (var product in products.ActiveProducts)
-            {
                 ActiveProducts.Add(product);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed to refresh products: {ex.Message}");
         }
         finally
         {
             _refreshLock.Release();
         }
     }
-    
-    public async Task<IaphubReceiptTransaction> BuyAsync(string sku)
-    {
-        return await IaphubSdk.BuyAsync(sku);
-    }
-    
-    public async Task RestoreAsync()
-    {
-        await IaphubSdk.RestoreAsync();
-    }
-    
-    public async Task LoginAsync(string userId)
-    {
-        await IaphubSdk.LoginAsync(userId);
-    }
-    
+
+    public Task<IaphubReceiptTransaction> BuyAsync(string sku) => IaphubSdk.BuyAsync(sku);
+    public Task RestoreAsync() => IaphubSdk.RestoreAsync();
+    public Task LoginAsync(string userId) => IaphubSdk.LoginAsync(userId);
+
     public async Task LogoutAsync()
     {
         await IaphubSdk.LogoutAsync();
@@ -149,15 +121,12 @@ public class StoreService : IStoreService
 
 Then register it in your DI container:
 
-**For MAUI (MauiProgram.cs):**
-
 ```csharp
+// MAUI (MauiProgram.cs)
 builder.Services.AddSingleton<IStoreService, StoreService>();
 ```
 
-```csharp
-services.AddSingleton<IStoreService, StoreService>();
-```
+Make sure to call `InitializeAsync()` when your app starts.
 
 ## Requirements
 
