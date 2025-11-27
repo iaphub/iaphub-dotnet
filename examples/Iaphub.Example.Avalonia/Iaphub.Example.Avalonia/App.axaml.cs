@@ -48,7 +48,10 @@ public partial class App : Application
         // Use runtime platform detection instead of compile-time #if directives
         if (OperatingSystem.IsIOS())
         {
-            var iosDialogServiceType = Type.GetType("Iaphub.Example.Avalonia.iOS.Services.IOSDialogService, Iaphub.Example.Avalonia.iOS");
+            // Try both assembly names (regular and Nuget examples)
+            var iosDialogServiceType = Type.GetType("Iaphub.Example.Avalonia.iOS.Services.IOSDialogService, Iaphub.Example.Avalonia.iOS")
+                ?? Type.GetType("Iaphub.Example.Avalonia.Nuget.iOS.Services.IOSDialogService, Iaphub.Example.Avalonia.Nuget.iOS");
+
             if (iosDialogServiceType != null)
             {
                 services.AddSingleton(typeof(IDialogService), iosDialogServiceType);
@@ -56,7 +59,10 @@ public partial class App : Application
         }
         else if (OperatingSystem.IsAndroid())
         {
-            var androidDialogServiceType = Type.GetType("Iaphub.Example.Avalonia.Android.Services.AndroidDialogService, Iaphub.Example.Avalonia.Android");
+            // Try both assembly names (regular and Nuget examples)
+            var androidDialogServiceType = Type.GetType("Iaphub.Example.Avalonia.Android.Services.AndroidDialogService, Iaphub.Example.Avalonia.Android")
+                ?? Type.GetType("Iaphub.Example.Avalonia.Nuget.Android.Services.AndroidDialogService, Iaphub.Example.Avalonia.Nuget.Android");
+
             if (androidDialogServiceType != null)
             {
                 services.AddSingleton(typeof(IDialogService), androidDialogServiceType);
