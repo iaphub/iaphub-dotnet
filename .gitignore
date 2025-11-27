@@ -1,0 +1,22 @@
+# Visual Studio / .NET
+.vs/
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Mac
+.DS_Store
+
+# Rider
+.idea/
+*.sln.iml
+
+# Native
+NativeReferences/
+archives/
+Jars/

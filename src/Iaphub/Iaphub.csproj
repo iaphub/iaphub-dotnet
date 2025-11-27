@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net9.0;net9.0-android;net9.0-ios</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <PackageId>Iaphub</PackageId>
+    <Authors>IAPHUB</Authors>
+    <Description>The easiest way to monetize your iOS and Android .NET apps by selling in-app purchases. Works with Avalonia, MAUI, and other .NET frameworks.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/iaphub/dotnet-iaphub</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>iap;in-app-purchase;iaphub;maui;avalonia;ios;android;storekit;billing;monetization;subscriptions</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- Shared SDK Sources -->
+  <!-- SDK folder is included by default -->
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- Android Configuration -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('android'))">
+    <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
+    <IsTrimmable>true</IsTrimmable>
+    <NoWarn>$(NoWarn);BG8403;BG8605;BG8606;CA2255</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Android\**" />
+    <Compile Remove="iOS\**" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net9.0-android'))">
+    <None Include="Android/IaphubSdkVersion.props" />
+    <Compile Include="Android\**\*.cs" />
+  </ItemGroup>
+
+  <Import Project="Android/IaphubSdkVersion.props" Condition="$(TargetFramework.Contains('android'))" />
+
+  <!-- iOS Configuration -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('ios'))">
+    <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+    <IsBindingProject>true</IsBindingProject>
+    <IsTrimmable>false</IsTrimmable>
+  </PropertyGroup>
+
+  <Import Project="iOS/IaphubSdkVersion.props" Condition="$(TargetFramework.Contains('ios'))" />
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net9.0-ios'))">
+    <None Include="iOS/IaphubSdkVersion.props" />
+    <Compile Include="iOS\**\*.cs" />
+    <ObjcBindingApiDefinition Include="iOS/ApiDefinition.cs" />
+    <Compile Remove="iOS/ApiDefinition.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.Contains('ios'))">
+    <NativeReference Include="iOS/NativeReferences/Iaphub.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>True</SmartLink>
+      <ForceLoad>True</ForceLoad>
+      <LinkerFlags>-L/usr/lib/swift -Wl,-rpath,/usr/lib/swift</LinkerFlags>
+    </NativeReference>
+  </ItemGroup>
+
+</Project>

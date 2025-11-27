@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ScrollView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:vm="clr-namespace:Iaphub.Example.Shared.ViewModels;assembly=Iaphub.Example.Shared"
+            xmlns:models="clr-namespace:Iaphub.Example.Shared.Models;assembly=Iaphub.Example.Shared"
+            xmlns:iaphub="clr-namespace:Iaphub;assembly=Iaphub"
+            x:Class="Iaphub.Example.Maui.Views.StoreView"
+            x:DataType="vm:StoreViewModel"
+            x:Name="RootStoreView"
+            BackgroundColor="White">
+
+
+    <Grid>
+        <VerticalStackLayout Margin="20"
+                           Spacing="20"
+                           IsVisible="{Binding IsInitialized}">
+
+            <Label Text="Products for sale"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#111566"
+                   Margin="0,20,0,20" />
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding ProductsForSale}"
+                               Spacing="12">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:ProductViewModel">
+                        <Frame BackgroundColor="White"
+                               BorderColor="#E0E0E0"
+                               CornerRadius="8"
+                               Padding="16"
+                               HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference RootStoreView}, Path=BindingContext.BuyCommand}"
+                                                    CommandParameter="{Binding Product.Sku}" />
+                            </Frame.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                    <Label Text="{Binding Product.LocalizedTitle}"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           TextColor="#111566" />
+                                    <Label Text="{Binding Product.LocalizedDescription}"
+                                           FontSize="14"
+                                           TextColor="#666666"
+                                           MaxLines="2"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding FormattedPrice}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="#111566"
+                                            Margin="0,4,0,0" />
+                                </VerticalStackLayout>
+
+                                <ActivityIndicator Grid.Column="1"
+                                                 IsVisible="{Binding IsProcessing}"
+                                                 IsRunning="{Binding IsProcessing}"
+                                                 WidthRequest="24"
+                                                 HeightRequest="24"
+                                                 VerticalOptions="Center"
+                                                 Color="#111566" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Label Text="No products for sale"
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black"
+                   IsVisible="{Binding HasNoProductsForSale}" />
+
+            <Label Text="Active products"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#111566"
+                   Margin="0,20,0,20" />
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActiveProducts}"
+                               Spacing="12">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="iaphub:IaphubActiveProduct">
+                        <Frame BackgroundColor="#F5F5F5"
+                               BorderColor="#E0E0E0"
+                               CornerRadius="8"
+                               Padding="16"
+                               HasShadow="False">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding LocalizedTitle}"
+                                       FontAttributes="Bold"
+                                       FontSize="18"
+                                       TextColor="#111566" />
+                                <Label Text="{Binding LocalizedDescription}"
+                                       FontSize="14"
+                                       TextColor="#666666"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation" />
+                                <HorizontalStackLayout Spacing="8" Margin="0,4,0,0">
+                                    <Label Text="●"
+                                           FontSize="12"
+                                           TextColor="#4CAF50"
+                                           VerticalOptions="Center" />
+                                    <Label Text="Active"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="#4CAF50"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Label Text="No active products (Subscriptions, non-consumables)"
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black"
+                   IsVisible="{Binding HasNoActiveProducts}" />
+
+            <VerticalStackLayout Margin="0,40,0,0" Spacing="12">
+                <Button Text="Restore purchases"
+                        Command="{Binding RestoreCommand}"
+                        HeightRequest="48"
+                        FontSize="16"
+                        BackgroundColor="#111566"
+                        TextColor="White" />
+                <Button Text="Manage subscriptions"
+                        Command="{Binding ShowManageSubscriptionsCommand}"
+                        HeightRequest="48"
+                        FontSize="16"
+                        BackgroundColor="#111566"
+                        TextColor="White" />
+                <Button Text="Redeem promo code"
+                        Command="{Binding PresentCodeRedemptionCommand}"
+                        HeightRequest="48"
+                        FontSize="16"
+                        BackgroundColor="#111566"
+                        TextColor="White"
+                        IsVisible="{Binding IsIos}" />
+                <Button Text="Logout"
+                        Command="{Binding LogoutCommand}"
+                        HeightRequest="48"
+                        FontSize="16"
+                        BackgroundColor="#DC3545"
+                        TextColor="White" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <ActivityIndicator IsVisible="{Binding IsLoading}"
+                         IsRunning="True"
+                         WidthRequest="120"
+                         HeightRequest="120"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center" />
+    </Grid>
+</ScrollView>

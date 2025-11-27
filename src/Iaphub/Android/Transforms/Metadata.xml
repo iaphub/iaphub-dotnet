@@ -1,0 +1,14 @@
+﻿<metadata>
+  <!-- Change SDK from class to interface to avoid base class resolution issues -->
+  <attr path="/api/package[@name='com.iaphub']/class[@name='SDK']" name="visibility">public</attr>
+  
+  <!-- Remove specific methods that use ProductDetails -->
+  <remove-node path="/api/package[@name='com.iaphub']/class[@name='Product']/method[@name='getProductDetails']" />
+  <remove-node path="/api/package[@name='com.iaphub']/class[@name='Product']/method[@name='setProductDetails']" />
+  
+  <!-- Remove specific methods that use Response -->
+  <remove-node path="/api/package[@name='com.iaphub']/class[@name='Request']/method[contains(@return, 'okhttp3.Response')]" />
+  
+  <!-- Remove LifecycleObserver interface implementation from SDK if present -->
+  <remove-node path="/api/package[@name='com.iaphub']/class[@name='SDK']/implements[@name-segment='LifecycleObserver']" />
+</metadata>

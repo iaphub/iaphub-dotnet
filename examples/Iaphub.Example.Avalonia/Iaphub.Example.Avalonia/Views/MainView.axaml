@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Iaphub.Example.Shared.ViewModels"
+             xmlns:views="using:Iaphub.Example.Avalonia.Views"
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="932"
+             x:Class="Iaphub.Example.Avalonia.Views.MainView"
+             x:DataType="vm:MainViewModel">
+    <Grid Background="#0C1230">
+        <ContentControl Content="{Binding CurrentViewModel}">
+            <ContentControl.DataTemplates>
+                <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+                    <views:LoginView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:StoreViewModel}">
+                    <views:StoreView />
+                </DataTemplate>
+            </ContentControl.DataTemplates>
+        </ContentControl>
+    </Grid>
+</UserControl>

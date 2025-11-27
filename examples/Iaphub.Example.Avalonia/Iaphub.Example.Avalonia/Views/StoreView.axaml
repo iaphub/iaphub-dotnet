@@ -1,0 +1,194 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Iaphub.Example.Shared.ViewModels"
+             xmlns:models="using:Iaphub.Example.Shared.Models"
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="932"
+             x:Class="Iaphub.Example.Avalonia.Views.StoreView"
+             x:DataType="vm:StoreViewModel"
+             x:Name="RootStoreView"
+             x:CompileBindings="False">
+    <ScrollViewer Background="White">
+        <Grid>
+            <StackPanel Margin="20" Spacing="20" IsVisible="{Binding IsInitialized}">
+            <TextBlock Text="Products for sale"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#111566"
+                       Margin="0,20,0,20" />
+
+            <ItemsControl ItemsSource="{Binding ProductsForSale}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="12" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding $parent[UserControl].DataContext.BuyCommand}"
+                                CommandParameter="{Binding Product.Sku}"
+                                Background="White"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="16"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Spacing="4">
+                                    <TextBlock Text="{Binding Product.LocalizedTitle}"
+                                               FontWeight="Bold"
+                                               FontSize="18"
+                                               Foreground="#111566"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Product.LocalizedDescription}"
+                                               FontSize="14"
+                                               Foreground="#666666"
+                                               TextWrapping="Wrap"
+                                               MaxLines="2" />
+                                    <TextBlock Text="{Binding FormattedPrice}"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               Foreground="#111566"
+                                               Margin="0,4,0,0" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="1"
+                                           Text="⟳"
+                                           FontSize="20"
+                                           Foreground="#111566"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="{Binding IsProcessing}"
+                                           x:CompileBindings="False">
+                                    <TextBlock.RenderTransform>
+                                        <RotateTransform CenterX="10" CenterY="10" />
+                                    </TextBlock.RenderTransform>
+                                    <TextBlock.Styles>
+                                        <Style Selector="TextBlock">
+                                            <Style.Animations>
+                                                <Animation Duration="0:0:1" IterationCount="INFINITE">
+                                                    <KeyFrame Cue="0%">
+                                                        <Setter Property="Opacity" Value="0.3" />
+                                                    </KeyFrame>
+                                                    <KeyFrame Cue="50%">
+                                                        <Setter Property="Opacity" Value="1.0" />
+                                                    </KeyFrame>
+                                                    <KeyFrame Cue="100%">
+                                                        <Setter Property="Opacity" Value="0.3" />
+                                                    </KeyFrame>
+                                                </Animation>
+                                            </Style.Animations>
+                                        </Style>
+                                    </TextBlock.Styles>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="No products for sale"
+                       TextAlignment="Center"
+                       Foreground="Black"
+                       IsVisible="{Binding HasNoProductsForSale}" />
+
+            <TextBlock Text="Active products"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#111566"
+                       Margin="0,20,0,20" />
+
+            <ItemsControl ItemsSource="{Binding ActiveProducts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="12" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#F5F5F5"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="16">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="{Binding LocalizedTitle}"
+                                           FontWeight="Bold"
+                                           FontSize="18"
+                                           Foreground="#111566"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding LocalizedDescription}"
+                                           FontSize="14"
+                                           Foreground="#666666"
+                                           TextWrapping="Wrap"
+                                           MaxLines="2" />
+                                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,0">
+                                    <TextBlock Text="●"
+                                               FontSize="12"
+                                               Foreground="#4CAF50"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="Active"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Foreground="#4CAF50"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="No active products (Subscriptions, non-consumables)"
+                       TextAlignment="Center"
+                       Foreground="Black"
+                       IsVisible="{Binding HasNoActiveProducts}" />
+
+            <!-- Bottom action buttons -->
+            <StackPanel Margin="0,40,0,0" Spacing="12">
+                <Button Content="Restore purchases"
+                        Command="{Binding RestoreCommand}"
+                        HorizontalAlignment="Stretch"
+                        Padding="16"
+                        FontSize="16"
+                        Background="#111566"
+                        Foreground="White" />
+
+                <Button Content="Manage subscriptions"
+                        Command="{Binding ShowManageSubscriptionsCommand}"
+                        HorizontalAlignment="Stretch"
+                        Padding="16"
+                        FontSize="16"
+                        Background="#111566"
+                        Foreground="White" />
+
+                <Panel IsVisible="{Binding IsIos}">
+                    <Button Content="Redeem promo code"
+                            Command="{Binding PresentCodeRedemptionCommand}"
+                            HorizontalAlignment="Stretch"
+                            Padding="16"
+                            FontSize="16"
+                            Background="#111566"
+                            Foreground="White" />
+                </Panel>
+
+                <Button Content="Logout"
+                        Command="{Binding LogoutCommand}"
+                        HorizontalAlignment="Stretch"
+                        Padding="16"
+                        FontSize="16"
+                        Background="#DC3545"
+                        Foreground="White" />
+            </StackPanel>
+            </StackPanel>
+
+            <ProgressBar IsVisible="{Binding IsLoading}"
+                         IsIndeterminate="True"
+                         Width="120"
+                         Height="4"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
+        </Grid>
+    </ScrollViewer>
+</UserControl>

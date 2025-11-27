@@ -1,0 +1,13 @@
+<Project>
+  <ItemGroup>
+    <AndroidMavenLibrary Include="com.iaphub:iaphub-android-sdk" Version="5.1.0" />
+    <PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.21.4" />
+    <PackageReference Include="Square.OkHttp3" Version="4.12.0.1" />
+    <PackageReference Include="GoogleGson" Version="2.11.0" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.Android.Google.BillingClient.Ktx" Version="7.1.1.4" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Extensions" Version="2.2.0.7" />
+    <AndroidIgnoredJavaDependency Include="androidx.lifecycle:lifecycle-extensions:2.2.0" />
+  </ItemGroup>
+</Project>

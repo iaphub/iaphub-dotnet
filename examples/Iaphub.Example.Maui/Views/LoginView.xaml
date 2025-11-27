@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ScrollView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:vm="clr-namespace:Iaphub.Example.Shared.ViewModels;assembly=Iaphub.Example.Shared"
+            x:Class="Iaphub.Example.Maui.Views.LoginView"
+            x:DataType="vm:LoginViewModel">
+
+
+    <Grid Padding="24"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          MaximumWidthRequest="430"
+          BackgroundColor="#10152C">
+
+        <Frame BackgroundColor="#1B2341"
+               CornerRadius="16"
+               Padding="32"
+               HasShadow="True">
+            <VerticalStackLayout Spacing="16">
+                <Label Text="Welcome back"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+
+                <Label Text="Sign in to personalize the in-app purchase experience or continue as a guest to explore the catalog."
+                       FontSize="16"
+                       TextColor="#A7B3D2"
+                       LineHeight="1.4"
+                       Margin="0,0,0,16" />
+
+                <Button Text="Login"
+                        Command="{Binding ShowLoginModalCommand}"
+                        BackgroundColor="#6C63FF"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="48"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+
+                <Button Text="Continue as guest"
+                        Command="{Binding LoginAnonymouslyCommand}"
+                        BackgroundColor="Transparent"
+                        BorderColor="#6C63FF"
+                        BorderWidth="1"
+                        TextColor="#6C63FF"
+                        CornerRadius="12"
+                        HeightRequest="48"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Modal overlay -->
+        <Grid IsVisible="{Binding IsModalVisible}"
+              BackgroundColor="#8C000000">
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
+                   Padding="24"
+                   Margin="24"
+                   MaximumWidthRequest="430"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Enter user ID"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#0C1230" />
+
+                    <Label Text="Provide the user identifier you want to authenticate with. Using the default will load demo data associated with that account."
+                           FontSize="14"
+                           TextColor="#4A5A82" />
+
+                    <Entry Text="{Binding UserId}"
+                           Placeholder="User ID"
+                           IsEnabled="{Binding IsNotLoading}" />
+
+                    <HorizontalStackLayout HorizontalOptions="End"
+                                         Spacing="8">
+                        <Button Text="Cancel"
+                                Command="{Binding CancelModalCommand}"
+                                IsEnabled="{Binding IsNotLoading}"
+                                TextColor="#4A5A82"
+                                BackgroundColor="Transparent" />
+
+                        <Button Text="{Binding LoginButtonText}"
+                                Command="{Binding LoginCommand}"
+                                BackgroundColor="#6C63FF"
+                                TextColor="White"
+                                IsEnabled="{Binding IsNotLoading}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+</ScrollView>

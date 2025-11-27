@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Iaphub.Example.Shared.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="932"
+             x:Class="Iaphub.Example.Avalonia.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+    <Grid Background="#10152C">
+        <ScrollViewer>
+            <Panel MaxWidth="430"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="24">
+                <Border Background="#1B2341"
+                        CornerRadius="16"
+                        Padding="32,32"
+                        BoxShadow="0 16 24 0 #40000000">
+                    <StackPanel Spacing="16">
+                        <TextBlock Text="Welcome back"
+                                   FontSize="28"
+                                   FontWeight="SemiBold"
+                                   Foreground="White" />
+
+                        <TextBlock Text="Sign in to personalize the in-app purchase experience or continue as a guest to explore the catalog."
+                                   FontSize="16"
+                                   Foreground="#A7B3D2"
+                                   TextWrapping="Wrap"
+                                   LineHeight="22"
+                                   Margin="0,0,0,16" />
+
+                        <Button Command="{Binding ShowLoginModalCommand}"
+                                Background="#6C63FF"
+                                Foreground="White"
+                                CornerRadius="12"
+                                Height="48"
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                            Login
+                        </Button>
+
+                        <Button Command="{Binding LoginAnonymouslyCommand}"
+                                Background="Transparent"
+                                BorderBrush="#6C63FF"
+                                BorderThickness="1"
+                                Foreground="#6C63FF"
+                                CornerRadius="12"
+                                Height="48"
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                            Continue as guest
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Panel IsVisible="{Binding IsModalVisible}"
+                       Background="#8C000000">
+                    <Border MaxWidth="430"
+                            Background="White"
+                            CornerRadius="16"
+                            Padding="24"
+                            Margin="24">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Enter user ID"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       Foreground="#0C1230" />
+
+                            <TextBlock Text="Provide the user identifier you want to authenticate with. Using the default will load demo data associated with that account."
+                                       FontSize="14"
+                                       Foreground="#4A5A82"
+                                       TextWrapping="Wrap" />
+
+                            <TextBox Text="{Binding UserId}"
+                                     Watermark="User ID"
+                                     IsEnabled="{Binding IsNotLoading}" />
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
+                                        Spacing="8">
+                                <Button Content="Cancel"
+                                        Command="{Binding CancelModalCommand}"
+                                        IsEnabled="{Binding IsNotLoading}"
+                                        Foreground="#4A5A82" />
+
+                                <Button Content="{Binding LoginButtonText}"
+                                        Command="{Binding LoginCommand}"
+                                        Background="#6C63FF"
+                                        Foreground="White"
+                                        IsEnabled="{Binding IsNotLoading}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Panel>
+            </Panel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
