@@ -1,5 +1,7 @@
 # IAPHUB - .NET In-App Purchase SDK
 
+[![NuGet](https://img.shields.io/nuget/v/Iaphub.svg?label=NuGet)](https://www.nuget.org/packages/Iaphub/)
+
 The easiest way to monetize your iOS and Android .NET apps by selling in-app purchases.
 
 ## Features
