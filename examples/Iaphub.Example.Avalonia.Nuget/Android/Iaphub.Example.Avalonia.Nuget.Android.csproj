@@ -12,7 +12,7 @@
   <ItemGroup>
     <!-- Reference Iaphub from NuGet instead of local project -->
     <!-- TODO: Update version number when package is published -->
-    <PackageReference Include="Iaphub" Version="1.1.0" />
+    <PackageReference Include="Iaphub" Version="1.1.1" />
 
     <!-- Reuse Avalonia dependencies -->
     <PackageReference Include="Avalonia.Android" Version="11.2.2" />

@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.0;net9.0;net10.0;net9.0-android;net10.0-android;net9.0-ios;net10.0-ios</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <PackageId>Iaphub</PackageId>
     <Authors>IAPHUB</Authors>
     <Description>The easiest way to monetize your iOS and Android .NET apps by selling in-app purchases. Works with Avalonia, MAUI, and other .NET frameworks.</Description>
