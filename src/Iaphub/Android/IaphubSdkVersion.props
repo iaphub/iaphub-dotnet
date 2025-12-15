@@ -1,7 +1,8 @@
 <Project>
   <ItemGroup>
-    <AndroidMavenLibrary Include="com.iaphub:iaphub-android-sdk" Version="5.1.0" />
+    <AndroidMavenLibrary Include="com.iaphub:iaphub-android-sdk" Version="5.1.1" />
     <PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.21.4" />
+    <PackageReference Include="Xamarin.KotlinX.Coroutines.Core" Version="1.9.0.4" />
     <PackageReference Include="Square.OkHttp3" Version="4.12.0.1" />
     <PackageReference Include="GoogleGson" Version="2.11.0" />
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.8.7.4" />
