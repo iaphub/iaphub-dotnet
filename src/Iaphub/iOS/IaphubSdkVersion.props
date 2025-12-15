@@ -4,6 +4,6 @@
       Version of the Iaphub iOS SDK xcframework bundled in this package.
       To update: change this version, run ./src/Iaphub/iOS/scripts/fetch-ios-sdk.sh, then commit the updated xcframework.
     -->
-    <IaphubIosSdkVersion>4.6.6</IaphubIosSdkVersion>
+    <IaphubIosSdkVersion>4.6.7</IaphubIosSdkVersion>
   </PropertyGroup>
 </Project>
