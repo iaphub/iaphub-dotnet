@@ -18,7 +18,7 @@ The easiest way to monetize your iOS and Android .NET apps by selling in-app pur
 
 - **iOS**: iOS 13.0+
 - **Android**: API Level 24+
-- **Frameworks**: .NET MAUI, Avalonia, and other .NET 9+ frameworks
+- **Frameworks**: .NET MAUI, Avalonia, and other .NET 9+ / .NET 10+ frameworks
 
 ## Installation
 
@@ -132,7 +132,7 @@ Make sure to call `InitializeAsync()` when your app starts.
 
 ## Requirements
 
-- .NET 9.0 or later
+- .NET 9.0 or .NET 10.0 or later
 - An IAPHUB account (sign up at [iaphub.com](https://www.iaphub.com))
 
 ## Support
