@@ -2,9 +2,9 @@
 
 ## Status
 
-- Backlog status: Draft
+- Backlog status: Ready for implementation planning
 - Spec status: Not required unless compatibility work changes public .NET behavior
-- Implementation sync: Not implemented
+- Implementation sync: Implemented and verified; ready for delivery review
 
 ## Problem
 
@@ -20,6 +20,18 @@ incompatible explicit Billing dependency.
 .NET Android consumers receive the current IAPHUB fixes and Billing Library
 support without needing to change their existing IAPHUB integration or move to
 a newer .NET SDK as part of the same update.
+
+## Actors and Experience Boundary
+
+- Primary actors are .NET Android application developers who consume this
+  package and maintain an IAPHUB integration.
+- Affected actors are Android customers who initialize the purchase catalog,
+  view products, or recover from a temporary Google Play Billing disconnect.
+- The current examples and public .NET API already provide those journeys; the
+  upgrade should preserve their entry points, UI, and observable contract.
+- No new interaction, navigation, copy, consent, or purchase decision is
+  intended. Native `5.2.1` reconnection and timeout behavior should improve
+  recovery without transferring new work to the application or customer.
 
 ## Proposed Outcome
 
@@ -66,7 +78,7 @@ runs against the updated candidate.
 
 ## Implementation Plans
 
-- None yet.
+- [Implementation plan](../implementation/2026-08-29-update-iaphub-android-sdk-5-2-1/index.md)
 
 ## Likely Ownership Areas
 
