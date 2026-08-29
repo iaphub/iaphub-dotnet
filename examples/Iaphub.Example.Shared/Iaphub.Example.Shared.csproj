@@ -3,6 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IaphubPackageVersion Condition="'$(IaphubPackageVersion)' == ''">1.1.2</IaphubPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +11,11 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(IaphubExampleUseNuget)' != 'true'">
     <ProjectReference Include="../../src/Iaphub/Iaphub.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IaphubExampleUseNuget)' == 'true'">
+    <PackageReference Include="Iaphub" Version="$(IaphubPackageVersion)" />
   </ItemGroup>
 </Project>

@@ -16,6 +16,7 @@
 
     <!-- Reuse Avalonia dependencies -->
     <PackageReference Include="Avalonia.Android" Version="11.2.2" />
+    <TrimmerRootAssembly Include="Xamarin.AndroidX.SavedState" RootMode="All" />
   </ItemGroup>
 
   <ItemGroup>
