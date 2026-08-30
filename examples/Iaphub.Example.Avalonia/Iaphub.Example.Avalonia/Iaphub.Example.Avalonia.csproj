@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <IaphubPackageVersion Condition="'$(IaphubPackageVersion)' == ''">1.1.2</IaphubPackageVersion>
+    <IaphubPackageVersion Condition="'$(IaphubPackageVersion)' == ''">1.1.3</IaphubPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
